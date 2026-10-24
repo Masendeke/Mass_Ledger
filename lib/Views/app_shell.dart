@@ -4,7 +4,7 @@ import 'home_screen.dart';
 import 'calendar_screen.dart';
 import 'history_screen.dart';
 import 'analytics_screen.dart';
-import 'week_overview_screen.dart';
+import 'profile_screen.dart';
 
 class AppShell extends StatefulWidget {
   final int initialIndex;
@@ -32,9 +32,9 @@ class _AppShellState extends State<AppShell> {
     final screens = [
       const HomeScreen(),
       const CalendarScreen(),
-      const WeekOverviewScreen(),
       const HistoryScreen(),
       const AnalyticsScreen(),
+      const ProfileScreen(),
     ];
 
     return Scaffold(
@@ -77,16 +77,6 @@ class _AppShellState extends State<AppShell> {
 
           NavigationDestination(
             icon: Icon(
-              Icons.view_week_outlined,
-            ),
-            selectedIcon: Icon(
-              Icons.view_week,
-            ),
-            label: 'Week',
-          ),
-
-          NavigationDestination(
-            icon: Icon(
               Icons.history_outlined,
             ),
             selectedIcon: Icon(
@@ -103,6 +93,16 @@ class _AppShellState extends State<AppShell> {
               Icons.bar_chart,
             ),
             label: 'Analytics',
+          ),
+
+          NavigationDestination(
+            icon: Icon(
+              Icons.person_outline,
+            ),
+            selectedIcon: Icon(
+              Icons.person,
+            ),
+            label: 'Profile',
           ),
         ],
       ),
