@@ -3,7 +3,11 @@ import 'package:mass_ledger/ViewModel/ledger_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'views/splash_screen.dart';
+import 'Views/login_screen.dart';
+import 'Views/splash_screen.dart';
+
+final GlobalKey<NavigatorState> navigatorKey =
+    GlobalKey<NavigatorState>();
 
 // ================================================================
 // MAIN
@@ -22,6 +26,25 @@ Future<void> main() async {
     // ignore: deprecated_member_use
     anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBoaW9mdXF0dHNranZzeXFidWtmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxMTA4MzIsImV4cCI6MjEwMzY4NjgzMn0.MXD89_zwvbPdzbpcXes9WliyJa4SbVkoI0e5PuCVXOo',
   );
+
+  // ==============================================================
+  // PASSWORD RECOVERY
+  // ==============================================================
+  //
+  // When the user opens the link from the "Forgot password" email,
+  // Supabase signs them in temporarily and fires passwordRecovery.
+  // Show the screen where they choose a new password.
+
+  Supabase.instance.client.auth.onAuthStateChange.listen((data) {
+    if (data.event == AuthChangeEvent.passwordRecovery) {
+      navigatorKey.currentState?.pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (_) => const ResetPasswordScreen(),
+        ),
+        (route) => false,
+      );
+    }
+  });
 
   // ==============================================================
   // START APP
@@ -47,6 +70,8 @@ class MassLedgerApp extends StatelessWidget {
       create: (_) => LedgerViewModel(),
 
       child: MaterialApp(
+        navigatorKey: navigatorKey,
+
         debugShowCheckedModeBanner: false,
 
         title: 'Mass Ledger',
