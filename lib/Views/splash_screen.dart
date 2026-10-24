@@ -1,23 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mass_ledger/Views/app_shell.dart';
-
-import 'package:mass_ledger/Views/calendar_screen.dart';
-//import 'package:mass_ledger/Views/calendar_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-//import 'login_screen.dart';
+import 'package:mass_ledger/Views/login_screen.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() =>
-      _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState
-    extends State<SplashScreen> {
-
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
@@ -28,51 +21,30 @@ class _SplashScreenState
   // ==========================================================
   // CHECK LOGIN STATUS
   // ==========================================================
+  //
+  // Supabase restores the saved session during
+  // Supabase.initialize(), so currentSession is already set when
+  // the user was logged in before the refresh / restart.
 
   Future<void> _checkLoginStatus() async {
     // Give the splash screen a little time to display
     await Future.delayed(
-      const Duration(seconds: 2),
+      const Duration(seconds: 1),
     );
-
-    final prefs =
-        await SharedPreferences.getInstance();
-
-    // Check if the user has logged in before
-    final isLoggedIn =
-        prefs.getBool('isLoggedIn') ?? false;
 
     if (!mounted) return;
 
-    if (isLoggedIn) {
-      // ------------------------------------------------------
-      // USER IS ALREADY LOGGED IN
-      // Go directly to Calendar Screen
-      // ------------------------------------------------------
+    final isLoggedIn =
+        Supabase.instance.client.auth.currentSession != null;
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) =>
-              const CalendarScreen(),
-        ),
-      );
-    } else {
-      // ------------------------------------------------------
-      // USER IS NOT LOGGED IN
-      // Go to Login Screen
-      // ------------------------------------------------------
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) =>
-              const AppShell(
-                initialIndex: 0,
-              ),
-        ),
-      );
-    }
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => isLoggedIn
+            ? const AppShell()
+            : const LoginScreen(),
+      ),
+    );
   }
 
   @override
@@ -94,11 +66,9 @@ class _SplashScreenState
         ),
 
         child: Column(
-          mainAxisAlignment:
-              MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
 
           children: [
-
             // ==================================================
             // LOGO
             // ==================================================
@@ -113,13 +83,11 @@ class _SplashScreenState
 
                 boxShadow: [
                   BoxShadow(
-                    color:
-                        Colors.black.withValues(
+                    color: Colors.black.withValues(
                       alpha: 0.2,
                     ),
                     blurRadius: 15,
-                    offset:
-                        const Offset(0, 6),
+                    offset: const Offset(0, 6),
                   ),
                 ],
               ),
@@ -127,13 +95,7 @@ class _SplashScreenState
               child: const Icon(
                 Icons.account_balance_wallet_outlined,
                 size: 55,
-                color:
-                    Color.fromARGB(
-                  255,
-                  3,
-                  29,
-                  50,
-                ),
+                color: Color.fromARGB(255, 3, 29, 50),
               ),
             ),
 
@@ -180,8 +142,7 @@ class _SplashScreenState
               width: 28,
               height: 28,
 
-              child:
-                  CircularProgressIndicator(
+              child: CircularProgressIndicator(
                 strokeWidth: 2.5,
                 color: Colors.white,
               ),
