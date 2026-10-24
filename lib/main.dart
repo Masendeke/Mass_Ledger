@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mass_ledger/ViewModel/ledger_viewmodel.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'views/splash_screen.dart';
 
@@ -8,7 +9,24 @@ import 'views/splash_screen.dart';
 // MAIN
 // ================================================================
 
-void main() {
+Future<void> main() async {
+  // Required before using asynchronous code in main().
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // ==============================================================
+  // SUPABASE INITIALIZATION
+  // ==============================================================
+
+  await Supabase.initialize(
+    url: 'https://phiofuqttskjvsyqbukf.supabase.co',
+    // ignore: deprecated_member_use
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBoaW9mdXF0dHNranZzeXFidWtmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxMTA4MzIsImV4cCI6MjEwMzY4NjgzMn0.MXD89_zwvbPdzbpcXes9WliyJa4SbVkoI0e5PuCVXOo',
+  );
+
+  // ==============================================================
+  // START APP
+  // ==============================================================
+
   runApp(
     const MassLedgerApp(),
   );
