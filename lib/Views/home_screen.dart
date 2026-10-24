@@ -4,6 +4,7 @@ import 'package:mass_ledger/ViewModel/ledger_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 import 'calendar_screen.dart';
+import 'week_overview_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -271,8 +272,12 @@ class HomeScreen extends StatelessWidget {
                 subtitle:
                     'See your results for the week.',
                 onTap: () {
-                  // Navigation is handled by AppShell.
-                  // This button can be connected later if needed.
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const WeekOverviewScreen(),
+                    ),
+                  );
                 },
               ),
 
