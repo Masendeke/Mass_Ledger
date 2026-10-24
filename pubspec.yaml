@@ -9,7 +9,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # followed by an optional build number separated by a +.
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number.
-# In Android, build-name is used as versionName while build-number used as versionCode.
+# In Android, build-name is used as versionName while build-number is used as versionCode.
 # Read more about versioning at:
 # https://developer.android.com/studio/publish/versioning
 version: 1.0.0+1
@@ -17,7 +17,7 @@ version: 1.0.0+1
 environment:
   sdk: ^3.11.1
 
-# Dependencies specify other packages that your application needs in order to work.
+# Dependencies specify other packages that your application needs to work.
 # To automatically upgrade your package dependencies to the latest versions
 # available on pub.dev, run `flutter pub upgrade --major-versions`.
 dependencies:
@@ -37,19 +37,22 @@ dependencies:
   # Local storage
   shared_preferences: ^2.5.3
 
+  # Supabase
+  supabase_flutter: ^2.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   # The "flutter_lints" package below contains a set of recommended lints
   # to encourage good coding practices. The lint set provided by the package
-  # is activated in the analysis_options.yaml file located at the root of
-  # your package.
+  # is activated in the analysis_options.yaml file located at the root
+  # of your package.
   flutter_lints: ^6.0.0
 
 # For information on the generic Dart part of this file, see the following page:
-# https://dart.dev/tools/pub/pubspec
-
+# https://dart.dev/tools/pubspec
+#
 # The following section is specific to Flutter packages.
 flutter:
 
@@ -62,9 +65,12 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
 
-  # An image asset can refer to one or more resolution-specific "variants".
+  # An asset can refer to one or more resolution-specific "variants".
   # See:
   # https://flutter.dev/to/resolution-aware-image-assets
+
+  # For more information about adding assets to your package, see:
+  # https://docs.flutter.dev/development/ui/assets-and-images
 
   # To add custom fonts to your application, add a fonts section here.
   #
@@ -75,5 +81,5 @@ flutter:
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #
-  # For more information about using custom fonts:
+  # For more information about fonts, see:
   # https://docs.flutter.dev/cookbook/design/fonts
